@@ -69,3 +69,65 @@ Automatically activated when holding both **L3** (`mo NAV`) and **R1** (`mo SYM`
 | **Row 1** | `mo TAB` | `_` | `F7` | `F8` | `F9` | `F12` | `VOL_DN` | `MUTE` | `VOL_UP` | `_` | `_` | `BSPC` |
 | **Row 2** | `LCTRL` | `_` | `F4` | `F5` | `F6` | `F11` | `_` | `_` | `_` | `_` | `_` | `_` |
 | **Row 3** | `bt LSHFT`| `_` | `F1` | `F2` | `F3` | `F10` | `_` | `_` | `_` | `_` | `_` | `_` |
+
+---
+
+## How to Update, Compile, and Flash New Firmware
+
+### Step 1: Update the Keymap Configuration
+Your keyboard layout is defined in standard ZMK keymap files:
+- `config/toucan.keymap` (The main user configuration file)
+- `boards/shields/toucan/toucan.keymap` (Should be kept in identical sync with the main config)
+
+Open either of these files in your editor, perform your adjustments, and save.
+
+### Step 2: Commit and Push to Trigger Compilation
+Your local branch is configured to track your personal GitHub fork (`origin/main`). Pushing code automatically triggers GitHub Actions compilation:
+```bash
+# 1. Stage the changed keymaps
+git add config/toucan.keymap boards/shields/toucan/toucan.keymap
+
+# 2. Commit the changes
+git commit -m "feat: customize layouts"
+
+# 3. Push to your fork's main branch (triggers workflow)
+git push
+```
+
+*Alternatively, you can manually force-trigger the build workflow using the GitHub CLI:*
+```bash
+gh workflow run "Build ZMK firmware" --repo Miu-Catalin/zmk-keyboard-toucan
+```
+
+### Step 3: Download Compiled Firmware Artifacts
+1. Go to your fork's GitHub actions runs page:
+   👉 [https://github.com/Miu-Catalin/zmk-keyboard-toucan/actions](https://github.com/Miu-Catalin/zmk-keyboard-toucan/actions)
+2. Click on the latest workflow run (e.g. from your push or dispatch).
+3. Scroll to the very bottom to find the **Artifacts** section.
+4. Download the `firmware` zip file and unzip it. Inside, you will find:
+   - `seeeduino_xiao_ble-toucan_left_rgbled_adapter_nice_view_gem-zmk.uf2` (Left Half)
+   - `seeeduino_xiao_ble-toucan_right_rgbled_adapter-zmk.uf2` (Right Half)
+
+### Step 4: Install / Flash both Halves
+You must flash each side of the split keyboard individually:
+
+#### A. Left Half (Master Side):
+1. Plug the **left half** into your computer using a USB-C cable.
+2. Put the microcontroller into **bootloader mode** by **double-tapping the physical reset button** (small button situated next to the USB-C port).
+3. A new USB storage drive named `XIAO-SENSE` (or similar) will mount on your computer.
+4. Drag and drop the **left half** `.uf2` file onto that drive.
+5. The drive will automatically disconnect when flashing completes.
+
+#### B. Right Half (Peripheral Side):
+1. Connect the **right half** to your computer via a USB-C cable.
+2. Put its microcontroller into **bootloader mode** by **double-tapping its physical reset button**.
+3. Drag and drop the **right half** `.uf2` file onto the newly mounted USB storage drive.
+4. The drive will automatically disconnect when flashing completes.
+
+---
+
+### Troubleshooting Bluetooth Connectivity
+If the two split halves stop talking to each other or have trouble pairing with your device:
+1. Double-tap the reset button on **both halves** to enter bootloader mode.
+2. Copy the `seeeduino_xiao_ble-settings_reset-zmk.uf2` file to both halves. This wipes your current Bluetooth bond profile cache.
+3. Once completed, re-flash the left and right `.uf2` firmware files onto their respective sides.
