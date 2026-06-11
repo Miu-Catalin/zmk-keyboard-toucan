@@ -9,6 +9,15 @@
 #define ADJ  3
 
 / {
+    behaviors {
+        td_esc_caps: tap_dance_esc_caps {
+            compatible = "zmk,behavior-tap-dance";
+            #binding-cells = <0>;
+            tapping-term-ms = <200>;
+            bindings = <&kp ESC>, <&kp CAPS>;
+        };
+    };
+
     conditional_layers {
         compatible = "zmk,conditional-layers";
         tri_layer {
@@ -23,19 +32,19 @@
         base {
             display-name = "BASE";
             bindings = <
-                &kp TAB   &kp Q &kp W &kp E &kp R &kp T   &kp Y &kp U  &kp I     &kp O   &kp P    &kp BSPC
-                &kp LCTRL &kp A &kp S &kp D &kp F &kp G   &kp H &kp J  &kp K     &kp L   &kp SEMI &kp SQT
-                &kp LSHFT &kp Z &kp X &kp C &kp V &kp B   &kp N &kp M  &kp COMMA &kp DOT &kp FSLH &kp ESC
-                                &kp LGUI &mo 1 &kp SPACE   &kp RET &mo 2 &kp RALT
+                &td_esc_caps    &kp Q         &kp W         &lt NAV E     &kp R         &kp T         &kp Y         &kp U         &kp I         &kp O         &kp P          &kp BSPC
+                &mt LSHFT TAB   &mt LCTRL A   &mt LGUI S    &mt LALT D    &kp F         &kp G         &kp H         &kp J         &mt RALT K    &mt RGUI L    &mt RCTRL SEMI &mt RSHFT SQT
+                &kp LSHFT       &kp Z         &kp X         &kp C         &kp V         &kp B         &kp N         &kp M         &kp COMMA     &kp DOT       &kp FSLH       &kp RSHFT
+                                                            &kp LGUI      &mo 1         &kp SPACE     &kp RET       &mo 2         &kp RALT
             >;
         };
 
         nav {
             display-name = "NAV";
             bindings = <
-                &kp TAB     &kp N1          &kp N2       &kp N3       &kp N4       &kp N5         &kp N6   &kp N7   &kp N8 &kp N9    &kp N0 &kp BSPC
-                &bt BT_CLR  &bt BT_SEL 0    &bt BT_SEL 1 &bt BT_SEL 2 &bt BT_SEL 3 &bt BT_SEL 4   &kp LEFT &kp DOWN &kp UP &kp RIGHT &trans &trans
-                &kp LSHFT   &studio_unlock  &trans       &trans       &trans       &trans         &trans   &trans   &trans &trans    &trans &trans
+                &trans      &kp N1          &kp N2       &kp N3       &kp N4       &kp N5         &trans   &kp HOME &kp PG_UP &kp PG_DN &kp END   &trans
+                &bt BT_CLR  &bt BT_SEL 0    &bt BT_SEL 1 &bt BT_SEL 2 &bt BT_SEL 3 &bt BT_SEL 4   &trans   &kp LEFT &kp DOWN  &kp UP    &kp RIGHT &trans
+                &trans      &studio_unlock  &trans       &trans       &trans       &trans         &trans   &trans   &trans    &trans    &trans    &trans
                                                 &kp LGUI     &trans       &kp SPACE      &kp RET  &trans   &kp RALT
             >;
         };
@@ -43,10 +52,10 @@
         sym {
             display-name = "SYM";
             bindings = <
-                &kp TAB   &kp EXCL &kp AT &kp HASH &kp DLLR &kp PRCNT   &kp CARET &kp AMPS  &kp KP_MULTIPLY &kp LPAR &kp RPAR &kp BSPC
-                &kp LCTRL &trans   &trans &trans   &trans   &trans      &kp MINUS &kp EQUAL &kp LBKT        &kp RBKT &kp BSLH &kp GRAVE
-                &kp LSHFT &trans   &trans &trans   &trans   &trans      &kp UNDER &kp PLUS  &kp LBRC        &kp RBRC &kp PIPE &kp TILDE
-                                          &kp LGUI &trans   &kp SPACE   &kp RET   &trans    &kp RALT
+                &trans   &kp EXCL &kp AT   &kp LBRC &kp RBRC &kp PIPE    &kp UP   &kp N7 &kp N8 &kp N9 &kp STAR &kp BSPC
+                &trans   &kp HASH &kp DLLR &kp LPAR &kp RPAR &kp GRAVE   &kp DOWN &kp N4 &kp N5 &kp N6 &kp PLUS &trans
+                &trans   &kp PRCNT &kp CARET &kp LBKT &kp RBKT &kp TILDE   &kp AMPS &kp N1 &kp N2 &kp N3 &kp BSLH &trans
+                                           &kp LGUI &trans   &kp SPACE   &kp RET  &trans &kp RALT
             >;
         };
 
