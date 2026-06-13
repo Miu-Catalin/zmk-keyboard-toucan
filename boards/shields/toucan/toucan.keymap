@@ -35,7 +35,7 @@
                 &td_esc_caps    &kp Q         &kp W         &lt NAV E     &kp R         &kp T         &kp Y         &kp U         &kp I         &kp O         &kp P          &kp BSPC
                 &mt LSHFT TAB   &mt LCTRL A   &mt LGUI S    &mt LALT D    &kp F         &kp G         &kp H         &kp J         &mt RALT K    &mt RGUI L    &mt RCTRL SEMI &mt RSHFT SQT
                 &kp LSHFT       &kp Z         &kp X         &kp C         &kp V         &kp B         &kp N         &kp M         &kp COMMA     &kp DOT       &kp FSLH       &kp RSHFT
-                                                            &kp BSPC      &kp DEL       &mo NAV       &mo SYM       &kp RET       &kp SPACE
+                                                            &mo NAV       &kp BSPC      &kp DEL       &kp RET       &kp SPACE     &mo SYM
             >;
         };
 
